@@ -1,0 +1,74 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class gradebook {
+    ArrayList<String> numberOfClasses = new ArrayList<>();
+
+
+    String classSelection = "unknown";
+    String name = "unknown";
+    ArrayList<Integer> grades = new ArrayList<>();
+    ArrayList<String> gradeTypes = new ArrayList<>();
+    ArrayList<Integer> weight = new ArrayList<>();
+    Scanner input = new Scanner(System.in);
+
+    public gradebook(){
+
+        grades = new ArrayList<>();
+        weight = new ArrayList<>();
+        gradeTypes.add("Quizzes");
+        gradeTypes.add("Exams");
+        gradeTypes.add("Homework");
+        gradeTypes.add("Projects");
+        weight.add(20);
+        weight.add(40);
+        weight.add(10);
+        weight.add(30);
+        //System.out.println(gradeTypes);
+        System.out.println("Enter class here: ");
+        this.classSelection = input.nextLine();
+        numberOfClasses.add(classSelection);
+        System.out.println("Enter name here: ");
+        this.name = input.nextLine();
+        for (int i = 0; i<gradeTypes.size(); i++){
+            System.out.print("Enter ");
+            System.out.print(gradeTypes.get(i));
+            System.out.println(" grade here: ");
+            int grade = input.nextInt();
+            grades.add(grade);
+            //System.out.println(weight);
+        }
+        this.grades = grades;
+        weight = weighGradebook(grades, weight);
+        int overallGrade = overallGrade(weight);
+        printStatements(overallGrade, weight);
+    }
+    public ArrayList<Integer> weighGradebook(ArrayList<Integer> grades, ArrayList<Integer>weight){
+        //System.out.println("nice");
+        ArrayList<Integer> weightedGrades = new ArrayList<>();
+        //System.out.println(weight);
+        for (int i = 0; i< grades.size(); i++){
+            int x = grades.get(i)* weight.get(i)/100;
+            //System.out.println(x);
+            weightedGrades.add(x);
+        }
+        return weightedGrades;
+    }
+    public Integer overallGrade(ArrayList<Integer> weightedGrades){
+        int overallGrade = 0;
+        for (int i = 0; i< weightedGrades.size(); i++){
+            overallGrade += weightedGrades.get(i);
+        }
+        return overallGrade;
+    }
+    public void printStatements(int overallGrade, ArrayList<Integer> weight){
+        System.out.println("The weighted totals for " + classSelection + " are as follows: ");
+        for (int i = 0; i< weight.size(); i++){
+
+            System.out.println(gradeTypes.get(i) + " are worth " + weight.get(i) + " percent of your grade.");
+        }
+        System.out.println("Your total grade for " + classSelection + " is " + overallGrade + " percent.");
+
+
+    }
+}
